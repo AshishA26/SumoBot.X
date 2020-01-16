@@ -2,7 +2,7 @@
 Code for my Sumo Bot
 # Help
 ## Download to computer
-1. Open cmder.exe from USB
+1. Open an IDE or Terminal
 2. `git config --global user.name (myName)`
 3. `git config --global user.email (myEmail)`
 4. `git pull`
