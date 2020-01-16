@@ -19,13 +19,14 @@
 unsigned char mode;				// Operating modes (search, attack))
 unsigned char range;			// Target range in cm
 unsigned char target;			// Target acquisition counter
+unsigned char counter;
 
 /*==============================================================================
 	Program constant definitions
  =============================================================================*/
 #define	search		0			// Search mode
 #define	attack		1			// Attack mode
-#define	maxRange	120			// Maximum sonar target range in cm
+#define	maxRange	70			// Maximum sonar target range in cm
 
 /*==============================================================================
 	Motor direction constant definitions
@@ -72,24 +73,33 @@ unsigned char sonar(void)
 int main(void)
 {
 	initPorts();
-
-
+    PORTB = STOP;
+    while (S6 == 1);
+    
+    for (counter = 10; counter != 0; counter --)
+    {
+        LED3 = !LED3;
+        __delay_ms(500);
+    }
+    
 	// Wait for button press and then delay 5s
 
     // Set starting conditions
-	LED3 = 1;					// Turn the floor LEDs on
+    LED12 = 1;					// Turn the floor LEDs on
+    LED11 = 1;
+    PORTB = LEFT;
 	mode = search;				// Set search mode
 	
-	PORTB = LEFT;				// Turn left
-	
 	while(1)
-	{        
+	{  
 		while(mode == search)		// Search mode
 		{
+            PORTB = LEFT;
 			range = sonar();		// Ping
-			
-			
-			
+			if(range > 0)
+            {
+                mode == attack;
+            }
 		}
 
 		while(mode == attack)
@@ -97,6 +107,10 @@ int main(void)
 			PORTB = FWD;			// Attack mode
 
 			range = sonar();		// Ping
+            if(range == 0)
+            {
+                mode == search;
+            }
 		}		
 	}
 }
