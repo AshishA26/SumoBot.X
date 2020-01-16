@@ -95,22 +95,25 @@ int main(void)
 		while(mode == search)		// Search mode
 		{
             PORTB = LEFT;
+            LED4 = 1;
 			range = sonar();		// Ping
 			if(range > 0)
             {
                 mode == attack;
             }
+            __delay_ms(50);
 		}
 
 		while(mode == attack)
 		{
 			PORTB = FWD;			// Attack mode
-
+            LED3 = 1;
 			range = sonar();		// Ping
             if(range == 0)
             {
                 mode == search;
             }
-		}		
+            __delay_ms(50);
+		}
 	}
 }
