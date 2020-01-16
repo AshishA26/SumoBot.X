@@ -75,7 +75,8 @@ int main(void)
 	initPorts();
     PORTB = STOP;
     while (S6 == 1);
-    
+    LED12 = 1;					// Turn the floor LEDs on
+    LED11 = 1;
     for (counter = 10; counter != 0; counter --)
     {
         LED3 = !LED3;
@@ -85,8 +86,6 @@ int main(void)
 	// Wait for button press and then delay 5s
 
     // Set starting conditions
-    LED12 = 1;					// Turn the floor LEDs on
-    LED11 = 1;
     PORTB = LEFT;
 	mode = search;				// Set search mode
 	
@@ -94,26 +93,51 @@ int main(void)
 	{  
 		while(mode == search)		// Search mode
 		{
-            PORTB = LEFT;
+//            PORTB = LEFT;
             LED4 = 1;
+            
+            if(Q1 == 0)
+            {
+                PORTB = REV;
+                __delay_ms(2000);
+                PORTB = RIGHT;
+            }
+            if(Q2 == 0)
+            {
+                PORTB = REV;
+                __delay_ms(2000);
+                PORTB = LEFT;
+            }
 			range = sonar();		// Ping
 			if(range > 0)
             {
                 mode == attack;
             }
-            __delay_ms(50);
+            __delay_ms(20);
 		}
 
 		while(mode == attack)
 		{
 			PORTB = FWD;			// Attack mode
             LED3 = 1;
+            if(Q1 == 0)
+            {
+                PORTB = REV;
+                __delay_ms(2000);
+                PORTB = RIGHT;
+            }
+            if(Q2 == 0)
+            {
+                PORTB = REV;
+                __delay_ms(2000);
+                PORTB = LEFT;
+            }
 			range = sonar();		// Ping
             if(range == 0)
             {
                 mode == search;
             }
-            __delay_ms(50);
+            __delay_ms(20);
 		}
 	}
 }
