@@ -23,7 +23,9 @@ void initPorts(void)
 
 	TRISA = 0b00101111;			// Set runLED, IR LEDs as outputs in PORTA
 	TRISB = 0b00000000;			// Set all PORTB pins for LED output
-	TRISC = 0b10110000;			// Set up receive and transmit lines for IR
+	TRISC = 0b10110010;			// Set up receive and transmit lines for IR
+                                /*TRISC: 1=input, to find out, go to PIC data
+                                 sheet and go to pg 55*/
 								// demodulator (U5) and LED11, servo outputs
 
 	// Set starting I/O conditions.
