@@ -41,7 +41,19 @@ unsigned char counter;
 #define RIGHT		0b00000101	// Left motor forward, right motor reversed
 #define	RIGHTREV	0b00001000	// Left motor reversed, right motor stopped
 #define	LEFTREV		0b00000001	// Right motor reversed, left motor stopped
-
+/*==============================================================================
+ BEEP
+ =============================================================================*/
+void beep(unsigned char period, unsigned char cycles)
+{
+	unsigned char i;
+	unsigned char t;
+	for (i = cycles; i != 0; i --)		// number of beeper pin output flips
+	{
+		BEEPER = !BEEPER;				// flip beeper pin and
+		for (t = period; t != 0; t --);	// wait for period to end
+	}
+}
 /*==============================================================================
 	Sonar range function. Returns target distance in cm, or 0 if error.
  =============================================================================*/
@@ -75,14 +87,14 @@ int main(void)
 {
 	initPorts();
     PORTB = STOP;
-    while (S6 == 1);
+    //while (S6 == 1);
     LED12 = 1;					// Turn the floor LEDs on
     LED11 = 1;
-    for (counter = 10; counter != 0; counter --)
-    {
-        LED3 = !LED3;
-        __delay_ms(500);
-    }
+//    for (counter = 10; counter != 0; counter --)
+//    {
+//        LED3 = !LED3;
+//        __delay_ms(500);
+//    }
     
 	// Wait for button press and then delay 5s
 
@@ -112,9 +124,9 @@ int main(void)
 			range = sonar();		// Ping
 			if(range > 0)
             {
+                beep(200,40);
                 mode = attack;
             }
-            __delay_ms(20);
 		}
 
 		while(mode == attack)
@@ -138,7 +150,6 @@ int main(void)
             {
                 mode = search;
             }
-            __delay_ms(20);
 		}
 	}
 }
