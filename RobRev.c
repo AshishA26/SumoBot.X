@@ -106,19 +106,19 @@ int main(void)
 	{  
 		while(mode == search)		// Search mode
 		{
-            PORTB = LEFT;
+//            PORTB = LEFT;
             __delay_ms(20);
             if(Q1 == 0)
             {
                 PORTB = REV;
-//                __delay_ms(2000);
-//                PORTB = RIGHT;
+                __delay_ms(2000);
+                PORTB = RIGHT;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-//                __delay_ms(2000);
-//                PORTB = LEFT;
+                __delay_ms(2000);
+                PORTB = LEFT;
             }
 			range = sonar();		// Ping
 			if(range > 0)
@@ -134,14 +134,16 @@ int main(void)
             if(Q1 == 0)
             {
                 PORTB = REV;
-//                __delay_ms(2000);
-//                PORTB = RIGHT;
+                __delay_ms(2000);
+                PORTB = RIGHT;
+                mode = search;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-//                __delay_ms(2000);
-//                PORTB = LEFT;
+                __delay_ms(2000);
+                PORTB = LEFT;
+                mode = search;
             }
 			range = sonar();		// Ping
             if(range == 0)
