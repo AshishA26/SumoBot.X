@@ -26,7 +26,7 @@ unsigned char counter;
  =============================================================================*/
 #define	search		1			// Search mode
 #define	attack		2			// Attack mode
-#define	maxRange	30			// Maximum sonar target range in cm
+#define	maxRange	70			// Maximum sonar target range in cm
 /*==============================================================================
 	Motor direction constant definitions
  =============================================================================*/
@@ -60,11 +60,11 @@ void beep(unsigned char period, unsigned char cycles)
 unsigned char sonar(void)
 {
 //	unsigned char range = 0;
-	PORTB = STOP;
+//  PORTB = STOP;
 	while(ECHO == 1);			// Wait until previous transmission has finished
 	__delay_ms(1);				// Add a delay and then
 	TRIG = 1;					// start a new ping
-	__delay_us(20);
+    __delay_us(20);
 	TRIG = 0;
 	while(ECHO == 0);			// Wait for sonar pulse transmission to finish
 	range = 0;					// Reset range
@@ -72,7 +72,7 @@ unsigned char sonar(void)
 	while(ECHO == 1)
 	{
 		__delay_us(50);			// Increment distance while waiting for echo
-		range ++;
+        range ++;
 		if(range == maxRange)	// Check for over-range and return error
 			return(0);
 	}
@@ -87,14 +87,14 @@ int main(void)
 {
 	initPorts();
     PORTB = STOP;
-    //while (S6 == 1);
+    while (S6 == 1);
     LED12 = 1;					// Turn the floor LEDs on
     LED11 = 1;
-//    for (counter = 10; counter != 0; counter --)
-//    {
-//        LED3 = !LED3;
-//        __delay_ms(500);
-//    }
+    for (counter = 10; counter != 0; counter --)
+    {
+        LED3 = !LED3;
+        __delay_ms(500);
+    }
     
 	// Wait for button press and then delay 5s
 
@@ -111,14 +111,14 @@ int main(void)
             if(Q1 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = RIGHT;
+//                __delay_ms(2000);
+//                PORTB = RIGHT;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = LEFT;
+//                __delay_ms(2000);
+//                PORTB = LEFT;
             }
 			range = sonar();		// Ping
 			if(range > 0)
@@ -134,14 +134,14 @@ int main(void)
             if(Q1 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = RIGHT;
+//                __delay_ms(2000);
+//                PORTB = RIGHT;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = LEFT;
+//                __delay_ms(2000);
+//                PORTB = LEFT;
             }
 			range = sonar();		// Ping
             if(range == 0)
