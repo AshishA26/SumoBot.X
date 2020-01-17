@@ -33,8 +33,8 @@ unsigned char counter;
 //MOTORS have this structure 0b0000LEFTLEFTRIGHTRIGHT
 //last 4 bits: back of left wheel, front of left wheel, front right wheel, back of right wheel
 #define STOP		0b00000000	// Both motors stopped
-#define FWD			0b00000110	// Both motors forward
-#define REV			0b00001001	// Both motors reverse
+#define FWD			0b00001001	// Both motors forward
+#define REV			0b00000110	// Both motors reverse
 #define LEFTFWD     0b00000010	// Right motor forward, left motor stopped
 #define RIGHTFWD	0b00000100	// Left motor forward, right motor stopped
 #define LEFT		0b00001010	// Right motor forward, left motor reversed
@@ -106,25 +106,27 @@ int main(void)
 	{  
 		while(mode == search)		// Search mode
 		{
-//            PORTB = LEFT;
+            PORTB = LEFT;
             __delay_ms(20);
             if(Q1 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = RIGHT;
+                __delay_ms(999);
+//                PORTB = RIGHT;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = LEFT;
+                __delay_ms(999);
+//                PORTB = LEFT;
             }
 			range = sonar();		// Ping
-			if(range > 0)
+			LED3 = 0;
+            if(range > 0)
             {
                 beep(200,40);
                 mode = attack;
+//                LED3 = 1;
             }
 		}
 
@@ -134,15 +136,15 @@ int main(void)
             if(Q1 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = RIGHT;
+                __delay_ms(999);
+//                PORTB = RIGHT;
                 mode = search;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
-                __delay_ms(2000);
-                PORTB = LEFT;
+                __delay_ms(999);
+//                PORTB = LEFT;
                 mode = search;
             }
 			range = sonar();		// Ping
