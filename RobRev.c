@@ -24,22 +24,23 @@ unsigned char counter;
 /*==============================================================================
 	Program constant definitions
  =============================================================================*/
-#define	search		0			// Search mode
-#define	attack		1			// Attack mode
-#define	maxRange	70			// Maximum sonar target range in cm
-
+#define	search		1			// Search mode
+#define	attack		2			// Attack mode
+#define	maxRange	30			// Maximum sonar target range in cm
 /*==============================================================================
 	Motor direction constant definitions
  =============================================================================*/
+//MOTORS have this structure 0b0000LEFTLEFTRIGHTRIGHT
+//last 4 bits: back of left wheel, front of left wheel, front right wheel, back of right wheel
 #define STOP		0b00000000	// Both motors stopped
 #define FWD			0b00000110	// Both motors forward
 #define REV			0b00001001	// Both motors reverse
-#define RIGHTFWD	0b00000010	// Left motor forward, right motor stopped
-#define LEFTFWD		0b00000100	// Right motor forward, left motor stopped
-#define RIGHT		0b00001010	// Left motor forward, right motor reversed
-#define LEFT		0b00000101	// Right motor forward, left motor reversed
-#define	RIGHTREV	0b00000001	// Left motor reversed, right motor stopped
-#define	LEFTREV		0b00001000	// Right motor reversed, left motor stopped
+#define LEFTFWD     0b00000010	// Right motor forward, left motor stopped
+#define RIGHTFWD	0b00000100	// Left motor forward, right motor stopped
+#define LEFT		0b00001010	// Right motor forward, left motor reversed
+#define RIGHT		0b00000101	// Left motor forward, right motor reversed
+#define	RIGHTREV	0b00001000	// Left motor reversed, right motor stopped
+#define	LEFTREV		0b00000001	// Right motor reversed, left motor stopped
 
 /*==============================================================================
 	Sonar range function. Returns target distance in cm, or 0 if error.
@@ -93,7 +94,7 @@ int main(void)
 	{  
 		while(mode == search)		// Search mode
 		{
-//            PORTB = LEFT;
+            PORTB = LEFT;
             LED4 = 1;
             
             if(Q1 == 0)
@@ -111,7 +112,7 @@ int main(void)
 			range = sonar();		// Ping
 			if(range > 0)
             {
-                mode == attack;
+                mode = attack;
             }
             __delay_ms(20);
 		}
@@ -135,7 +136,7 @@ int main(void)
 			range = sonar();		// Ping
             if(range == 0)
             {
-                mode == search;
+                mode = search;
             }
             __delay_ms(20);
 		}
