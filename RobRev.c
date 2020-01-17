@@ -60,7 +60,7 @@ void beep(unsigned char period, unsigned char cycles)
 unsigned char sonar(void)
 {
 //	unsigned char range = 0;
-	
+	PORTB = STOP;
 	while(ECHO == 1);			// Wait until previous transmission has finished
 	__delay_ms(1);				// Add a delay and then
 	TRIG = 1;					// start a new ping
@@ -107,8 +107,7 @@ int main(void)
 		while(mode == search)		// Search mode
 		{
             PORTB = LEFT;
-            LED4 = 1;
-            
+            __delay_ms(20);
             if(Q1 == 0)
             {
                 PORTB = REV;
@@ -132,7 +131,6 @@ int main(void)
 		while(mode == attack)
 		{
 			PORTB = FWD;			// Attack mode
-            LED3 = 1;
             if(Q1 == 0)
             {
                 PORTB = REV;
