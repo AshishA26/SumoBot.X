@@ -121,7 +121,7 @@ int main(void)
 //                PORTB = LEFT;
             }
 			range = sonar();		// Ping
-			LED3 = 0;
+//			LED3 = 0;
             if(range > 0)
             {
                 beep(200,40);
