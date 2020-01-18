@@ -19,7 +19,8 @@
 unsigned char mode;				// Operating modes (search, attack))
 unsigned char range;			// Target range in cm
 unsigned char target;			// Target acquisition counter
-unsigned char counter;
+unsigned char counter;          //used for the time delay
+unsigned char direction;        //decides to go left or right at the start
 
 /*==============================================================================
 	Program constant definitions
@@ -87,7 +88,15 @@ int main(void)
 {
 	initPorts();
     PORTB = STOP;
-    while (S6 == 1);
+    if (S6 == 0)
+    {
+        direction = RIGHT;
+    }
+    if (S7 == 0)
+    {
+        direction = LEFT;
+    }
+    while ((S7 == 0) && (S6 == 0));
     LED12 = 1;					// Turn the floor LEDs on
     LED11 = 1;
     for (counter = 10; counter != 0; counter --)
@@ -99,14 +108,14 @@ int main(void)
 	// Wait for button press and then delay 5s
 
     // Set starting conditions
-    PORTB = LEFT;
+    PORTB = direction;
 	mode = search;				// Set search mode
 	
 	while(1)
 	{  
 		while(mode == search)		// Search mode
 		{
-            PORTB = LEFT;
+            PORTB = direction;
             __delay_ms(20);
             if(Q1 == 0)
             {
