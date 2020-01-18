@@ -24,47 +24,34 @@ unsigned char counter;
 /*==============================================================================
 	Program constant definitions
  =============================================================================*/
-#define	search		1			// Search mode
-#define	attack		2			// Attack mode
+#define	search		0			// Search mode
+#define	attack		1			// Attack mode
 #define	maxRange	70			// Maximum sonar target range in cm
+
 /*==============================================================================
 	Motor direction constant definitions
  =============================================================================*/
-//MOTORS have this structure 0b0000LEFTLEFTRIGHTRIGHT
-//last 4 bits: back of left wheel, front of left wheel, front right wheel, back of right wheel
 #define STOP		0b00000000	// Both motors stopped
-#define FWD			0b00001001	// Both motors forward
-#define REV			0b00000110	// Both motors reverse
-#define LEFTFWD     0b00000010	// Right motor forward, left motor stopped
-#define RIGHTFWD	0b00000100	// Left motor forward, right motor stopped
-#define LEFT		0b00001010	// Right motor forward, left motor reversed
-#define RIGHT		0b00000101	// Left motor forward, right motor reversed
-#define	RIGHTREV	0b00001000	// Left motor reversed, right motor stopped
-#define	LEFTREV		0b00000001	// Right motor reversed, left motor stopped
-/*==============================================================================
- BEEP
- =============================================================================*/
-void beep(unsigned char period, unsigned char cycles)
-{
-	unsigned char i;
-	unsigned char t;
-	for (i = cycles; i != 0; i --)		// number of beeper pin output flips
-	{
-		BEEPER = !BEEPER;				// flip beeper pin and
-		for (t = period; t != 0; t --);	// wait for period to end
-	}
-}
+#define FWD			0b00000110	// Both motors forward
+#define REV			0b00001001	// Both motors reverse
+#define RIGHTFWD	0b00000010	// Left motor forward, right motor stopped
+#define LEFTFWD		0b00000100	// Right motor forward, left motor stopped
+#define RIGHT		0b00001010	// Left motor forward, right motor reversed
+#define LEFT		0b00000101	// Right motor forward, left motor reversed
+#define	RIGHTREV	0b00000001	// Left motor reversed, right motor stopped
+#define	LEFTREV		0b00001000	// Right motor reversed, left motor stopped
+
 /*==============================================================================
 	Sonar range function. Returns target distance in cm, or 0 if error.
  =============================================================================*/
 unsigned char sonar(void)
 {
 //	unsigned char range = 0;
-//  PORTB = STOP;
+	
 	while(ECHO == 1);			// Wait until previous transmission has finished
 	__delay_ms(1);				// Add a delay and then
 	TRIG = 1;					// start a new ping
-    __delay_us(20);
+	__delay_us(20);
 	TRIG = 0;
 	while(ECHO == 0);			// Wait for sonar pulse transmission to finish
 	range = 0;					// Reset range
@@ -72,7 +59,7 @@ unsigned char sonar(void)
 	while(ECHO == 1)
 	{
 		__delay_us(50);			// Increment distance while waiting for echo
-        range ++;
+		range ++;
 		if(range == maxRange)	// Check for over-range and return error
 			return(0);
 	}
@@ -87,71 +74,21 @@ int main(void)
 {
 	initPorts();
     PORTB = STOP;
-    while (S6 == 1);
-    LED12 = 1;					// Turn the floor LEDs on
-    LED11 = 1;
-    for (counter = 10; counter != 0; counter --)
+    if (S6 == 0)
     {
-        LED3 = !LED3;
-        __delay_ms(500);
+        for (counter = 10; counter != 0; counter --)
+        {
+            LED3 = !LED3;
+            __delay_ms(500);
+        }
     }
-    
 	// Wait for button press and then delay 5s
 
     // Set starting conditions
-    PORTB = LEFT;
-	mode = search;				// Set search mode
 	
-	while(1)
-	{  
-		while(mode == search)		// Search mode
-		{
-            PORTB = LEFT;
-            __delay_ms(20);
-            if(Q1 == 0)
-            {
-                PORTB = REV;
-                __delay_ms(999);
-//                PORTB = RIGHT;
-            }
-            if(Q2 == 0)
-            {
-                PORTB = REV;
-                __delay_ms(999);
-//                PORTB = LEFT;
-            }
-			range = sonar();		// Ping
-			LED3 = 0;
-            if(range > 0)
-            {
-                beep(200,40);
-                mode = attack;
-//                LED3 = 1;
-            }
-		}
-
-		while(mode == attack)
-		{
-			PORTB = FWD;			// Attack mode
-            if(Q1 == 0)
-            {
-                PORTB = REV;
-                __delay_ms(999);
-//                PORTB = RIGHT;
-                mode = search;
-            }
-            if(Q2 == 0)
-            {
-                PORTB = REV;
-                __delay_ms(999);
-//                PORTB = LEFT;
-                mode = search;
-            }
-			range = sonar();		// Ping
-            if(range == 0)
-            {
-                mode = search;
-            }
-		}
-	}
+    while(1)
+    {
+        PORTB = PORTA;
+    }
+	PORTB = LEFT;				// Turn left
 }
