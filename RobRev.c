@@ -96,6 +96,7 @@ int main(void)
     {
         direction = LEFT;
     }
+    // According to https://www.microchip.com/forums/m859897.aspx, && does if any of them pressed or etc
     while ((S7 == 0) && (S6 == 0));
     LED12 = 1;					// Turn the floor LEDs on
     LED11 = 1;
