@@ -24,9 +24,9 @@ unsigned char counter;
 /*==============================================================================
 	Program constant definitions
  =============================================================================*/
-#define	search		1			// Search mode
+#define	drive		1			// Search mode
 #define	attack		2			// Attack mode
-#define	maxRange	70			// Maximum sonar target range in cm
+#define	maxRange	30			// Maximum sonar target range in cm
 /*==============================================================================
 	Motor direction constant definitions
  =============================================================================*/
@@ -99,22 +99,22 @@ int main(void)
 	// Wait for button press and then delay 5s
 
     // Set starting conditions
-    PORTB = LEFT;
-	mode = search;				// Set search mode
+    PORTB = FWD;
+	mode = drive;				// Set search mode
 	
 	while(1)
 	{  
-		while(mode == search)		// Search mode
+		while(mode == drive)		// Search mode
 		{
-            PORTB = LEFT;
+            PORTB = FWD;
             __delay_ms(20);
-            if(Q1 == 0)
+            if(Q1 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
 //                PORTB = RIGHT;
             }
-            if(Q2 == 0)
+            if(Q2 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
@@ -132,26 +132,32 @@ int main(void)
 
 		while(mode == attack)
 		{
-			PORTB = FWD;			// Attack mode
-            if(Q1 == 0)
+			PORTB = RIGHT;			// Attack mode
+            __delay_ms(1000);
+            PORTB = FWD;
+            __delay_ms(1500);
+            PORTB = LEFT;
+            __delay_ms(1000);
+            mode = drive;
+            if(Q1 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
 //                PORTB = RIGHT;
-                mode = search;
+                mode = drive;
             }
-            if(Q2 == 0)
+            if(Q2 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
 //                PORTB = LEFT;
-                mode = search;
+                mode = drive;
             }
 			range = sonar();		// Ping
-            if(range == 0)
-            {
-                mode = search;
-            }
+//            if(range == 0)
+//            {
+//                mode = drive;
+//            }
 		}
 	}
 }
