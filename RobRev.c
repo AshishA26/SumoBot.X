@@ -108,13 +108,13 @@ int main(void)
 		{
             PORTB = LEFT;
             __delay_ms(20);
-            if(Q1 == 0)
+            if(Q1 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
 //                PORTB = RIGHT;
             }
-            if(Q2 == 0)
+            if(Q2 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
@@ -133,14 +133,14 @@ int main(void)
 		while(mode == attack)
 		{
 			PORTB = FWD;			// Attack mode
-            if(Q1 == 0)
+            if(Q1 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
 //                PORTB = RIGHT;
                 mode = search;
             }
-            if(Q2 == 0)
+            if(Q2 == 1)
             {
                 PORTB = REV;
                 __delay_ms(999);
