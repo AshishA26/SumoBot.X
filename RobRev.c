@@ -88,6 +88,8 @@ int main(void)
 {
 	initPorts();
     PORTB = STOP;
+    // According to https://www.microchip.com/forums/m859897.aspx, && does if any of them pressed or etc
+    while ((S7 == 1) && (S6 == 1));
     if (S6 == 0)
     {
         direction = RIGHT;
@@ -96,8 +98,6 @@ int main(void)
     {
         direction = LEFT;
     }
-    // According to https://www.microchip.com/forums/m859897.aspx, && does if any of them pressed or etc
-    while ((S7 == 0) && (S6 == 0));
     LED12 = 1;					// Turn the floor LEDs on
     LED11 = 1;
     for (counter = 10; counter != 0; counter --)
@@ -122,13 +122,13 @@ int main(void)
             {
                 PORTB = REV;
                 __delay_ms(999);
-//                PORTB = RIGHT;
+                PORTB = RIGHT;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
                 __delay_ms(999);
-//                PORTB = LEFT;
+                PORTB = LEFT;
             }
 			range = sonar();		// Ping
 //			LED3 = 0;
@@ -147,14 +147,14 @@ int main(void)
             {
                 PORTB = REV;
                 __delay_ms(999);
-//                PORTB = RIGHT;
+                PORTB = RIGHT;
                 mode = search;
             }
             if(Q2 == 0)
             {
                 PORTB = REV;
                 __delay_ms(999);
-//                PORTB = LEFT;
+                PORTB = LEFT;
                 mode = search;
             }
 			range = sonar();		// Ping
