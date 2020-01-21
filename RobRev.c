@@ -125,19 +125,22 @@ int main(void)
             if(range > 0)
             {
                 beep(200,40);
-                mode = attack;
+//                mode = attack;
 //                LED3 = 1;
+                PORTB = RIGHTREV;			// Attack mode
+                __delay_ms(2000);
+                PORTB = LEFTREV;
+                __delay_ms(2000);
+                mode = drive;
             }
 		}
 
 		while(mode == attack)
 		{
-			PORTB = RIGHT;			// Attack mode
-            __delay_ms(1000);
-            PORTB = FWD;
-            __delay_ms(1500);
-            PORTB = LEFT;
-            __delay_ms(1000);
+			PORTB = RIGHTFWD;			// Attack mode
+            __delay_ms(2000);
+            PORTB = LEFTFWD;
+            __delay_ms(2000);
             mode = drive;
             if(Q1 == 1)
             {
