@@ -31,16 +31,27 @@ unsigned char counter;
 	Motor direction constant definitions
  =============================================================================*/
 //MOTORS have this structure 0b0000LEFTLEFTRIGHTRIGHT
-//last 4 bits: front of left wheel, back of left wheel, back right wheel, front of right wheel
+////last 4 bits: front of left wheel, back of left wheel, back right wheel, front of right wheel
+//#define STOP		0b00000000	// Both motors stopped
+//#define FWD			0b00001001	// Both motors forward
+//#define REV			0b00000110	// Both motors reverse
+//#define LEFTFWD     0b00000001	// Right motor forward, left motor stopped
+//#define RIGHTFWD	0b00001000	// Left motor forward, right motor stopped
+//#define LEFT		0b00000101	// Right motor forward, left motor reversed
+//#define RIGHT		0b00001010	// Left motor forward, right motor reversed
+//#define	RIGHTREV	0b00000100	// Left motor reversed, right motor stopped
+//#define	LEFTREV		0b00000010  // Right motor reversed, left motor stopped
+
+//last 4 bits: back of left wheel, front of left wheel, front right wheel, back of right wheel
 #define STOP		0b00000000	// Both motors stopped
 #define FWD			0b00001001	// Both motors forward
 #define REV			0b00000110	// Both motors reverse
 #define LEFTFWD     0b00000001	// Right motor forward, left motor stopped
 #define RIGHTFWD	0b00001000	// Left motor forward, right motor stopped
-#define LEFT		0b00000101	// Right motor forward, left motor reversed
-#define RIGHT		0b00001010	// Left motor forward, right motor reversed
+#define LEFT		0b00001010	// Right motor forward, left motor reversed
+#define RIGHT		0b00000101	// Left motor forward, right motor reversed
 #define	RIGHTREV	0b00000100	// Left motor reversed, right motor stopped
-#define	LEFTREV		0b00000010  // Right motor reversed, left motor stopped
+#define	LEFTREV		0b00000010	// Right motor reversed, left motor stopped
 /*==============================================================================
  BEEP
  =============================================================================*/
@@ -124,14 +135,27 @@ int main(void)
 //			LED3 = 0;
             if(range > 0)
             {
-                beep(200,40);
-//                mode = attack;
-//                LED3 = 1;
-                PORTB = RIGHTFWD;			// Attack mode
-                __delay_ms(2000);
-                PORTB = LEFTFWD;
-                __delay_ms(2000);
-                mode = drive;
+                if(range > 0)
+                {
+                    if(range > 0)
+                    {
+                        if(range > 0)
+                        {
+                            if(range > 0)
+                            {
+
+                                beep(200,40);
+            //                    mode = attack;
+            //                    LED3 = 1;
+                                PORTB = RIGHTFWD;
+                                __delay_ms(1000);
+                                PORTB = LEFTFWD;
+                                __delay_ms(1000);
+                                mode = drive;
+                            }
+                        }
+                    }
+                }
             }
 		}
 
