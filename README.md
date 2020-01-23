@@ -1,5 +1,6 @@
 # SumoBot
 Code for my Sumo Bot
+![IMG_20200123_133940](https://user-images.githubusercontent.com/44419439/73014373-07282580-3de8-11ea-9f75-cc51af88f10b.jpg)
 # Help
 ## Download to computer
 1. Open an IDE or Terminal
