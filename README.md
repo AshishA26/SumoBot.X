@@ -1,5 +1,5 @@
 # SumoBot
-Code for my Sumo Bot. The bot sees an opponent through the sonar and tries to push them off the sumo ring.
+Code for my Sumo Bot. The bot detects an opponent through the ultrasonic sonar and tries to push them off the sumo ring.
 
 ## Help
 ### Download to computer
