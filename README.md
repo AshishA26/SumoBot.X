@@ -8,3 +8,5 @@ Code for my Sumo Bot that I made in my Grade 10 TEJ20I course. The bot detects a
 ![SumoBotAshishPic3](./SumoBotPics/SumoBotAshishPic3.jpg)
 ![SumoBotAshishPic1](./SumoBotPics/SumoBotAshishPic1.jpg)
 ![SumoBotAshishPic2](./SumoBotPics/SumoBotAshishPic2.jpg)
+
+Schematic Diagrams provided by my robotics teacher (https://www.siriusmicro.com/).
