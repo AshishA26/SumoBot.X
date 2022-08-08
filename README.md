@@ -1,5 +1,5 @@
 # SumoBot
-Code for my Sumo Bot that I made in my Grade 10 TEJ20I course. The bot detects an opponent through the ultrasonic sonar and tries to push them off the sumo ring.
+The Sumo Bot that I made in for Robotics Club in Grade 9. The bot detects an opponent through the ultrasonic sonar and tries to push them off the sumo ring.
 
 Here is a short demo of a Sumo Bot Battle with my bot vs my tech teacher's bot (click on it to see the video).
 [![Link to youtube video](./SumoBotPics/SumoGif.gif)](https://www.youtube.com/watch?v=O3whnSKX0yQ)
